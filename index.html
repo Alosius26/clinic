@@ -504,10 +504,10 @@
     MedCare
   </a>
   <div class="nav-links" id="navLinks">
-    <a href="#services" onclick="closeNav()">Services</a>
-    <a href="#doctors" onclick="closeNav()">Doctors</a>
-    <a href="#about" onclick="closeNav()">About</a>
-    <a href="#booking" class="nav-cta" onclick="closeNav()">Book Appointment</a>
+    <a href="#services">Services</a>
+    <a href="#doctors">Doctors</a>
+    <a href="#about">About</a>
+    <a href="#booking-form" class="nav-cta">Book Appointment</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleNav()">
     <span></span><span></span><span></span>
@@ -522,7 +522,7 @@
     <h1>Your Health is Our <em>Greatest</em> Commitment</h1>
     <p>World-class medical specialists, state-of-the-art facilities, and compassionate care — all in one place. Book your consultation today.</p>
     <div class="hero-actions">
-      <a href="#booking" class="btn-primary">Book an Appointment</a>
+      <a href="#booking-form" class="btn-primary">Book an Appointment</a>
       <a href="#services" class="btn-outline">Our Services</a>
     </div>
     <div class="hero-stats">
@@ -609,7 +609,7 @@
       <div class="section-label">Meet The Team</div>
       <h2 class="section-title">Our Expert Physicians</h2>
     </div>
-    <a href="#booking" class="btn-outline" style="white-space:nowrap">Book a Doctor →</a>
+    <a href="#booking-form" class="btn-outline" style="white-space:nowrap">Book a Doctor →</a>
   </div>
   <div class="doctors-grid">
     <div class="doctor-card">
@@ -747,7 +747,7 @@
       </div>
     </div>
 
-    <div class="booking-form">
+    <div class="booking-form" id="booking-form">
       <div class="form-title">Schedule a Consultation</div>
       <div class="success-banner" id="successBanner">
         ✅ Appointment request sent! We'll confirm within 2 hours.
@@ -913,11 +913,18 @@
     document.querySelector('textarea').value = '';
   }
 
-  // Smooth scroll for anchor links
+  // Smooth scroll for anchor links — close nav first, then scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      if (!target) return;
+      e.preventDefault();
+      // Always close mobile nav before scrolling
+      closeNav();
+      // Small delay lets overflow:hidden clear before scrolling
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
     });
   });
 </script>
