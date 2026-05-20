@@ -327,8 +327,11 @@
     padding: 14px 18px;
     font-size: 14px; color: var(--primary);
     font-weight: 500; margin-bottom: 20px;
-    align-items: center; gap: 10px;
+    align-items: flex-start; gap: 10px;
+    flex-wrap: wrap; word-break: break-word;
+    line-height: 1.6;
   }
+  .success-banner strong { word-break: break-word; }
 
   /* FOOTER */
   footer {
@@ -903,7 +906,14 @@
 
     const banner = document.getElementById('successBanner');
     banner.style.display = 'flex';
-    banner.innerHTML = `✅ Appointment for <strong style="margin:0 4px">${fname}</strong> in <strong style="margin:0 4px">${dept}</strong> on <strong style="margin:0 4px">${date}</strong> at <strong style="margin:0 4px">${time}</strong> — confirmed!`;
+    banner.innerHTML = `
+      <div style="font-size:20px;flex-shrink:0">✅</div>
+      <div>
+        <div style="font-weight:700;margin-bottom:4px">Appointment Confirmed!</div>
+        <div><strong>${fname}</strong> · <strong>${dept}</strong></div>
+        <div style="margin-top:2px;opacity:0.85">${date} &nbsp;at&nbsp; ${time}</div>
+      </div>
+    `;
     banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
     // Reset
