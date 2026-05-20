@@ -365,13 +365,133 @@
   .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
   .hero-image { animation: fadeUp 0.9s 0.3s ease both; }
 
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 100px; }
-    .why-grid, .booking-inner { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr 1fr; }
+  /* ── HAMBURGER BUTTON ── */
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 40px; height: 40px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+    border-radius: 8px; transition: background .2s;
+  }
+  .hamburger:hover { background: var(--primary-light); }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--primary); border-radius: 2px;
+    transition: transform .3s, opacity .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── NAV OVERLAY (mobile) ── */
+  .nav-overlay {
+    display: none; position: fixed; inset: 0; z-index: 98;
+    background: rgba(15,32,39,0.4); backdrop-filter: blur(2px);
+  }
+  .nav-overlay.visible { display: block; }
+
+  /* ── TABLET (≤ 960px) ── */
+  @media (max-width: 960px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding-top: 100px;
+      text-align: center;
+      gap: 40px;
+    }
+    .hero p { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-image { justify-content: center; }
+    .hero-img-wrap { max-width: 100%; height: 360px; }
+    .hero-float-card.card-1 { left: 0; bottom: 20px; }
+    .hero-float-card.card-2 { right: 0; top: 30px; }
+
+    .why-grid { grid-template-columns: 1fr; gap: 40px; }
     .why-img-wrap { height: 280px; }
+
+    .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+
+    .doctors-header {
+      flex-direction: column; align-items: flex-start; gap: 16px;
+    }
+
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: fixed; top: 70px; right: 0;
+      width: min(300px, 80vw);
+      height: calc(100vh - 70px);
+      background: white;
+      box-shadow: -8px 0 40px rgba(11,110,79,0.12);
+      padding: 32px 28px; gap: 8px;
+      z-index: 99; overflow-y: auto;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      font-size: 16px; padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-cta {
+      margin-top: 12px; text-align: center;
+      padding: 14px 24px !important;
+    }
+  }
+
+  /* ── MOBILE (≤ 600px) ── */
+  @media (max-width: 600px) {
+    nav { padding: 0 5vw; height: 60px; }
+
+    .hero {
+      padding: 80px 5vw 56px;
+      min-height: auto;
+    }
+    .hero h1 { font-size: clamp(28px, 7vw, 38px); }
+    .hero p { font-size: 15px; }
+    .hero-img-wrap { height: 260px; border-radius: 20px 20px 80px 20px; }
+    .hero-stats { gap: 20px; flex-wrap: wrap; }
+    .stat-num { font-size: 26px; }
+    .hero-float-card { font-size: 12px; padding: 10px 12px; }
+    .hero-float-card.card-1 { left: 8px; }
+    .hero-float-card.card-2 { right: 8px; }
+
+    section { padding: 60px 5vw; }
+
+    .services-header { margin-bottom: 36px; }
+    .services-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .doctors-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .doctor-img { height: 160px; }
+    .doctor-info { padding: 12px 14px; }
+    .doctor-name { font-size: 14px; }
+
+    .section-title { font-size: clamp(24px, 6vw, 34px); }
+
+    .why-img-wrap { height: 220px; }
+    .feat-title { font-size: 14px; }
+    .feat-desc { font-size: 13px; }
+    .feat-icon { width: 40px; height: 40px; font-size: 18px; }
+
+    .booking-form { padding: 24px 18px; border-radius: 18px; }
     .form-row { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
+    .form-title { font-size: 22px; }
+
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    .footer-brand p { max-width: 100%; }
+
+    .nav-links { top: 60px; height: calc(100vh - 60px); }
+  }
+
+  /* ── SMALL MOBILE (≤ 400px) ── */
+  @media (max-width: 400px) {
+    .doctors-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-outline { width: 100%; text-align: center; }
+    .hero-float-card { display: none; }
   }
 </style>
 </head>
@@ -383,13 +503,17 @@
     <div class="logo-icon">✚</div>
     MedCare
   </a>
-  <div class="nav-links">
-    <a href="#services">Services</a>
-    <a href="#doctors">Doctors</a>
-    <a href="#about">About</a>
-    <a href="#booking" class="nav-cta">Book Appointment</a>
+  <div class="nav-links" id="navLinks">
+    <a href="#services" onclick="closeNav()">Services</a>
+    <a href="#doctors" onclick="closeNav()">Doctors</a>
+    <a href="#about" onclick="closeNav()">About</a>
+    <a href="#booking" class="nav-cta" onclick="closeNav()">Book Appointment</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
 
 <!-- HERO SECTION -->
 <section class="hero">
@@ -737,6 +861,23 @@
 </footer>
 
 <script>
+  // Hamburger nav toggle
+  function toggleNav() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('hamburger');
+    const overlay = document.getElementById('navOverlay');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeNav() {
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('navOverlay').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
   // Set min date for appointment to today
   const dateInput = document.getElementById('apptDate');
   const today = new Date().toISOString().split('T')[0];
